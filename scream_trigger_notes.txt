@@ -1,0 +1,45 @@
+scream_trigger.ino — What Changed and Why
+==========================================
+
+What we changed
+---------------
+Replaced the original single-purpose scream detector with a two-sensor sketch:
+an IMU tilt detector and a continuous mic sampler.
+
+
+IMU tilt detection (new)
+------------------------
+Why: The game design changed — the trigger to start a round is now the player
+tilting the device, not screaming into it. Screaming is now a separate later
+step (the benefits minigame).
+
+How: The MPU-9250 is read directly over I2C using raw register access (Wire.h
+only, no external library). On boot, the sketch samples 100 accelerometer
+readings to record the resting gravity vector as a baseline. Each loop it reads
+the current gravity vector and computes the angle between it and the baseline
+using the dot product / arccos method. If that angle exceeds TILT_THRESHOLD
+(currently 20°), it sends TILT once over serial and locks out further sends
+until the device returns within TILT_RESET (10°) of resting position.
+
+We avoided the Bolder Flight Systems MPU9250 Arduino library because it has a
+chain of missing dependencies (Eigen, units.h) that don't resolve cleanly on
+this toolchain.
+
+
+Mic output (changed)
+--------------------
+Why: Thresholding moved to the Python side so it can be tuned without
+reflashing the ESP32.
+
+How: Instead of sending SCREAM when a threshold is crossed, the sketch now
+sends MIC:<0-4095> every loop iteration — the raw peak ADC value sampled over
+a 50ms window on GPIO34. Python reads these continuously and makes its own
+threshold decision during the scream minigame.
+
+
+Serial protocol summary
+-----------------------
+READY           Boot complete, IMU calibrated
+IMU_ERROR:0xNN  IMU not responding — check wiring
+TILT            Device tilted >20° from resting position (debounced)
+MIC:<int>       Raw mic peak, 0–4095, sent every ~50ms
