@@ -1,0 +1,35 @@
+This is the recommendations and thought doc for the first complete
+iteration of corporate crusaders. 
+
+1. the scrolling function should be not just black pink and white. 
+ideally it would have the actual images scrolling
+
+2. the scream functionality should be more fun - could there be a
+scream bar? maybe the louder one screams, the better the roll? could
+be an exercise in futility - you get an award if it's loud but you 
+get fired anyway. 
+
+3. the grey console screen should have corporate crusaders logo below
+the scrolling.
+
+4. change the text font - hard to read.
+
+5. make the text stay on the screen for longer. Could also have some 
+button functionality. Would require extra dev work with the esp32.
+
+6. If you scream hard enough, you could get rehired as a short term
+contractor with no holiday pay.
+
+7. Sound too! We're going to layer e.g. 
+https://www.youtube.com/watch?v=qUD495Pd6Vc&list=RDqUD495Pd6Vc&start_radio=1
+ with slot music. dark medieval phonk trap, then the casino slot music
+then the sad music at the end.
+
+8. MPU to trigger the turn. 
+
+9. Scream functionality - build a shell for it? buy a box from a 
+charity shop. you have the option to scream for your job. if and only if
+you clip the sound by maxing it out, then you get rehired as short term
+contractor.
+
+10. lil bit of figma modication
